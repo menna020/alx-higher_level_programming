@@ -1,39 +1,69 @@
 #!/usr/bin/python3
-""" Here is a short script to 
-test max_integer([..])"""
+"""Unittest for the max_integer module
+"""
 
 import unittest
 max_integer = __import__('6-max_integer').max_integer
 
-# A testcase is created by subclassing unittest.TestCase
-class TestMaxInteger(unittest.TestCase):
 
-    # All tests you make must be passable by the function below
-    # The unittest module provides tools for constructing and running tests
-    # test_ means it's a method
-    def test_upper(self):
-        self.assertEqual(max_integer([6, 7, 8, 9]), 9)
+class TestMaxInteger(unittest.TestCase):
+    """TestCase for the max_integer function."""
+
+    def test_regular(self):
+        """Test with a regular list of ints: should return the max result"""
+        l = [1, 2, 3, 4, 5]
+        result = max_integer(l)
+        self.assertEqual(result, 5)
+
+    def test_not_int(self):
+        """Test with a list of non-ints and ints:
+        should raise a TypeError exception"""
+        l = ["a", "b", 9]
+        self.assertRaises(TypeError, max_integer, l)
+
+    def test_empty(self):
+        """Test with an empty list: should return None"""
+        l = []
+        result = max_integer(l)
+        self.assertEqual(result, None)
+
+    def test_negative(self):
+        """Test with a list of negative values: should return the max"""
+        l = [-2, -6, -1]
+        result = max_integer(l)
+        self.assertEqual(result, -1)
+
+    def test_float(self):
+        """Test with a list of mixed ints and floats: should return the max"""
+        l = [3, 4.5, 2]
+        result = max_integer(l)
+        self.assertEqual(result, 4.5)
+
+    def test_not_list(self):
+        """Test with a parameter that's not a list: should raise a TypeError"""
+        self.assertRaises(TypeError, max_integer, 7)
+
+    def test_unique(self):
+        """Test with a list of one int: should return the value of this int"""
+        l = [45]
+        result = max_integer(l)
+        self.assertEqual(result, 45)
+
+    def test_identical(self):
+        """Test with a list of identical values: should return the value"""
+        l = [8, 8, 8, 8, 8]
+        result = max_integer(l)
+        self.assertEqual(result, 8)
+
+    def test_strings(self):
+        """Test with a list of strings: should return the first string"""
+        l = ["hi", "hello"]
+        result = max_integer(l)
+        self.assertEqual(result, "hi")
 
     def test_none(self):
-        self.assertEqual(max_integer([]), None)
-
-    def test_one(self):
-        self.assertEqual(max_integer([2]), 2)
-
-    def test_one_neg(self):
-        self.assertEqual(max_integer([-10]), -10)
-
-    def test_neg(self):
-        self.assertEqual(max_integer([1, -2, -3, -4]), 1)
-
-    def test_middle(self):
-        self.assertEqual(max_integer([1, 3, 8, 2, 6]), 8)
+        """Test with a None as parameter: should raise a TypeError"""
+        self.assertRaises(TypeError, max_integer, None)
 
 if __name__ == '__main__':
     unittest.main()
-
-# The crux of each test is a call to assertEqual() to check 
-# for an expected result; assertTrue() or assertFalse() to verify a condition; 
-# or assertRaises() to verify that a specific exception gets raised. 
-# These methods are used instead of the assert statement so 
-# the test runner can accumulate all test results and produce a report.
