@@ -1,4 +1,6 @@
- a matrix multiplication function."""
+#!/usr/bin/python3
+# 100-matrix_mul.py
+"""Defines a matrix multiplication function."""
 
 
 def matrix_mul(m_a, m_b):
